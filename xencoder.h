@@ -73,8 +73,21 @@ public:
 
         doc_type *dt = (doc_type*)this;
         dt->ArrayBegin(key, ext);
+
+        bool is_oe = Extend::OmitEmpty(ext);
+        size_t max_non_empty = N;
+        if (is_oe && N > 0){
+            for (size_t i = N - 1; i >= 0; i--){
+                max_non_empty = i;
+                if (!dt->empty(val[i])) { break; }
+            }
+        }
+        auto ext_non_oe = *ext;
+        Extend::ClearOmitEmtpy(&ext_non_oe);
+
         for (size_t i=0; i<N; ++i) {
-            dt->encode(dt->IndexKey(i), val[i], ext);
+            dt->encode(dt->IndexKey(i), val[i], &ext_non_oe);
+            if (i >= max_non_empty) { break; }
         }
         dt->ArrayEnd(key, ext);
         return true;

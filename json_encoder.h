@@ -136,9 +136,13 @@ public:
         }
         return true;
     }
+    template<typename T>
+    bool empty(const T &) { return false; }
+    bool empty(const std::string &val) { return val.empty(); }
     bool encode(const char*key, const std::string &val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val.empty(), String);
     }
+    bool empty(const bool &val) { return !val; }
     bool encode(const char*key, const bool &val, const Extend *ext) {
         X_PACK_JSON_ENCODE(!val, Bool);
     }
@@ -157,30 +161,39 @@ public:
     bool encode(const char*key, const unsigned short & val, const Extend *ext) {
         return this->encode(key, (const unsigned int&)val, ext);
     }
+    bool empty(const int &val) { return val==0; }
     bool encode(const char*key, const int& val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val==0, Int);
     }
+    bool empty(const unsigned int &val) { return val==0; }
     bool encode(const char*key, const unsigned int& val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val==0, Uint);
     }
+    bool empty(const long long &val) { return val==0; }
     bool encode(const char*key, const long long& val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val==0, Int64);
     }
+    bool empty(const unsigned long long &val) { return val==0; }
     bool encode(const char*key, const unsigned long long & val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val==0, Uint64);
     }
+    bool empty(const long &val) { return val==0; }
     bool encode(const char*key, const long &val, const Extend *ext) {
         return this->encode(key, (const long long&)val, ext);
     }
+    bool empty(const unsigned long &val) { return val==0; }
     bool encode(const char*key, const unsigned long &val, const Extend *ext) {
         return this->encode(key, (const unsigned long long&)val, ext);
     }
+    bool empty(const float &val) { return val==0; }
     bool encode(const char*key, const float & val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val==0, Double);
     }
+    bool empty(const double &val) { return val==0; }
     bool encode(const char*key, const double & val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val==0, Double);
     }
+    bool empty(const long double &val) { return val==0; }
     bool encode(const char*key, const long double & val, const Extend *ext) {
         X_PACK_JSON_ENCODE(val==0, Double);
     }
