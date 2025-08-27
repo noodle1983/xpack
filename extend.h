@@ -164,6 +164,10 @@ struct Extend {
         }
         return ext->alias->Flag(type, flag, value);
     }
+
+    static void ClearOmitEmtpy(Extend *ext) {
+        if (NULL!=ext) ext->flag &= ~X_PACK_FLAG_OE;
+    }
     
     static bool OmitEmpty(const Extend *ext) {
         return NULL!=ext && (ext->flag&X_PACK_FLAG_OE);

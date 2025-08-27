@@ -113,8 +113,22 @@ public:
         XPACK_WRITE_EMPTY((N==0))
 
         _w.ArrayBegin(key, ext);
+
+        bool is_oe = Extend::OmitEmpty(ext);
+        size_t max_non_empty = N;
+        if (is_oe && N > 0){
+            for (size_t i = N - 1; i >= 0; i--){
+                max_non_empty = i;
+                if (!_w->empty(val[i])) { break; }
+            }
+        }
+        auto ext_non_oe = *ext;
+        Extend::ClearOmitEmtpy(&ext_non_oe);
+
         for (size_t i=0; i<N; ++i) {
-            this->encode(_w.IndexKey(i), val[i], NULL);
+            this->encode(_w.IndexKey(i), val[i], &ext_non_oe);
+
+            if (i >= max_non_empty) { break; }
         }
         _w.ArrayEnd(key, ext);
         return true;

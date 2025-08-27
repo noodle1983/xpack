@@ -134,6 +134,21 @@ private:
         }
         return true;
     }
+    
+    template<typename T>
+    bool empty(const T &) { return false; }
+    bool empty(const std::string &val) { return val.empty(); }
+    bool empty(const bool &val) { return !val; }
+    bool empty(const int &val) { return val==0; }
+    bool empty(const unsigned int &val) { return val==0; }
+    bool empty(const long long &val) { return val==0; }
+    bool empty(const unsigned long long &val) { return val==0; }
+    bool empty(const long &val) { return val==0; }
+    bool empty(const unsigned long &val) { return val==0; }
+    bool empty(const float &val) { return val==0; }
+    bool empty(const double &val) { return val==0; }
+    bool empty(const long double &val) { return val==0; }
+    
     bool encode_bool(const char*key, const bool&val, const Extend *ext) {
         (void)ext;
         xpack_set_key(key);
